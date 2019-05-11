@@ -12,7 +12,7 @@ test_x=double(test_x)/255;%一定记住转换为浮点类型数据
 test_y=double(test_y);
 
 %% 加载训练好的数据
-use_pre=true;%use_pre=true表示加载之前训练好的模型继续训练，如果为false,则重新训练，如果只是验证测试数据集，则设置为false
+use_pre=false;%use_pre=true表示加载之前训练好的模型继续训练，如果为false,则重新训练，如果只是验证测试数据集，则设置为false
 old_rL=[];
 old_epochs_error=[];
 if(use_pre)
@@ -24,7 +24,7 @@ end
 %% 构建卷积神经网络
 opts.alpha=0.01;%学习率
 opts.batchsize=50;%batch大小
-opts.numepochs=1;%用同样的数据集训练的次数，也就是算法迭代次数，我们的模型已经训练了205次
+opts.numepochs=205;%用同样的数据集训练的次数，也就是算法迭代次数，我们的模型已经训练了205次
 
 %cnn是一个结构体，cnn.layers是5x1的cell,每个cell里面又是一个结构体（struct）
 if(~use_pre)
@@ -50,10 +50,10 @@ cnn.momentum=0.9;%冲量项系数
 cnn.weightPenaltyL2=0.0001;%权值惩罚
 
 %% 使用训练样本训练卷积神经网络
-% cnn=cnntrain(cnn,train_x,train_y,opts,test_x,test_y);  
-% cnn.rL=[old_rL,cnn.rL];
-% cnn.epochs_error=[old_epochs_error,cnn.epochs_error];
-% save cnn.mat cnn%再次保存训练训练更新后的网络数据
+cnn=cnntrain(cnn,train_x,train_y,opts,test_x,test_y);  
+cnn.rL=[old_rL,cnn.rL];
+cnn.epochs_error=[old_epochs_error,cnn.epochs_error];
+save cnn.mat cnn%再次保存训练训练更新后的网络数据
 
 %% 使用测试样本测试卷积神经网络
 t1=clock;
