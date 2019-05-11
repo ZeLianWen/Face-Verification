@@ -4,9 +4,9 @@ clear all;
 %% AR训练数据集
 load AR_face_image_train;
 
-N=size(face_image,3);
-rows=size(face_image,1);
-cols=size(face_image,2);
+N=size(face_image_train,3);
+rows=size(face_image_train,1);
+cols=size(face_image_train,2);
 M=14;%AR数据集每个人14幅图像
 per_AR=50;%每个人50幅不同的图像对，组成不匹配的图像集合
 
@@ -18,8 +18,8 @@ for i=1:1:N/M %对于每个人
     for j=1:1:M-1 %对于一个人的M幅图像
         for k=j+1:1:M
             temp=temp+1;
-            match_images_AR(:,:,(i-1)*(M*(M-1)/2)+temp,1)=face_image(:,:,(i-1)*M+j);
-            match_images_AR(:,:,(i-1)*(M*(M-1)/2)+temp,2)=face_image(:,:,(i-1)*M+k);
+            match_images_AR(:,:,(i-1)*(M*(M-1)/2)+temp,1)=face_image_train(:,:,(i-1)*M+j);
+            match_images_AR(:,:,(i-1)*(M*(M-1)/2)+temp,2)=face_image_train(:,:,(i-1)*M+k);
             match_labels_AR(1,(i-1)*(M*(M-1)/2)+temp)=1;%1表示是匹配图像
         end
     end
@@ -42,8 +42,8 @@ for i=1:1:N/M %对于每个人,AR训练数据集是100个人
         end
         for k=1:1:per_AR
             rand_a=ceil(rand(1)*M);%产生1-M之间的随机数
-            no_match_images_AR(:,:,(i-1)*M*per_AR+(j-1)*per_AR+k,1)=face_image(:,:,(i-1)*M+j);
-            no_match_images_AR(:,:,(i-1)*M*per_AR+(j-1)*per_AR+k,2)=face_image(:,:,(rands(k)-1)*M+rand_a);
+            no_match_images_AR(:,:,(i-1)*M*per_AR+(j-1)*per_AR+k,1)=face_image_train(:,:,(i-1)*M+j);
+            no_match_images_AR(:,:,(i-1)*M*per_AR+(j-1)*per_AR+k,2)=face_image_train(:,:,(rands(k)-1)*M+rand_a);
             no_match_labels_AR(1,(i-1)*M*per_AR+(j-1)*per_AR+k)=0;
         end    
    end
@@ -65,9 +65,9 @@ clear no_match_labels_AR;
 %% AR测试数据集
 load AR_face_image_test;
 
-N=size(face_image,3);
-rows=size(face_image,1);
-cols=size(face_image,2);
+N=size(face_image_test,3);
+rows=size(face_image_test,1);
+cols=size(face_image_test,2);
 M=14;%AR数据集每个人14幅图像
 per_AR=8;%每个人8幅不同的图像对，组成不匹配的图像集合
 
@@ -79,8 +79,8 @@ for i=1:1:N/M %对于每个人
     for j=1:1:M-1 %对于一个人的M幅图像
         for k=j+1:1:M
             temp=temp+1;
-            match_images_AR(:,:,(i-1)*(M*(M-1)/2)+temp,1)=face_image(:,:,(i-1)*M+j);
-            match_images_AR(:,:,(i-1)*(M*(M-1)/2)+temp,2)=face_image(:,:,(i-1)*M+k);
+            match_images_AR(:,:,(i-1)*(M*(M-1)/2)+temp,1)=face_image_test(:,:,(i-1)*M+j);
+            match_images_AR(:,:,(i-1)*(M*(M-1)/2)+temp,2)=face_image_test(:,:,(i-1)*M+k);
             match_labels_AR(1,(i-1)*(M*(M-1)/2)+temp)=1;%1表示是匹配图像
         end
     end
@@ -103,8 +103,8 @@ for i=1:1:N/M %对于每个人,ORL是40个人
         end
         for k=1:1:per_AR
             rand_a=ceil(rand(1)*M);%产生1-M之间的随机数
-            no_match_images_AR(:,:,(i-1)*M*per_AR+(j-1)*per_AR+k,1)=face_image(:,:,(i-1)*M+j);
-            no_match_images_AR(:,:,(i-1)*M*per_AR+(j-1)*per_AR+k,2)=face_image(:,:,(rands(k)-1)*M+rand_a);
+            no_match_images_AR(:,:,(i-1)*M*per_AR+(j-1)*per_AR+k,1)=face_image_test(:,:,(i-1)*M+j);
+            no_match_images_AR(:,:,(i-1)*M*per_AR+(j-1)*per_AR+k,2)=face_image_test(:,:,(rands(k)-1)*M+rand_a);
             no_match_labels_AR(1,(i-1)*M*per_AR+(j-1)*per_AR+k)=0;
         end    
    end
